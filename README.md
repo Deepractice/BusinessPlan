@@ -38,10 +38,8 @@
 
 **扫码添加微信，深度交流**
 
-<div align="center">
+<div align="left">
 <img src="qrcode.jpg" alt="微信二维码" width="200"/>
-<br/>
-<em>杨清禾 - 深度实践创始人</em>
 </div>
 
 ## 📄 开源协议
