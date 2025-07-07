@@ -29,39 +29,34 @@
   > 我们认为人工智能是高于传统软件或计算机的智能化，特定行业逻辑的沉淀不再是代码而是提示词。  
   > 项目实绩: [DPML · 声明式标签AI应用开发协议](https://github.com/Deepractice/DPML)
 
-- **共享便捷**：Define once, Execute anywhere. 智能体打包分发如Docker容器，一键部署
+- **共享便捷**：一次定义，随处执行 (Define once, Execute anywhere)。智能体打包分发如Docker容器，一键部署
   > 我们遵循结果导向，交付专业智能体使其具唯一性和具象化特征，融合装机即用目标实现便携封装和打包服务。
 
-- **使用自然**：Chat is all you need. 零学习成本的AI交互重新设计传统人机协作模式
+- **使用自然**：对话即一切（Chat is all you need）。零学习成本的AI交互重新设计传统人机协作模式
   > 我们坚信AI时代的信息交互模式，应脱离传统互联网软件方式，以自然语言交互为基础。  
   > 项目实绩: [PromptX · 领先的上下文工程平台](https://github.com/Deepractice/PromptX)
 
 ### 牵引力数据
-- GitHub Star 1.8K+，开源不到2个月实现爆发式增长
-- 月增长率900 Stars，超越90%同类AI项目
-- 日活跃增长30 Stars，显示强劲的社区动力
-- 真实用户案例：开发效率提升1300%（40小时→30分钟）
+- GitHub Star 1.8K+，开源2个月内实现爆发式增长
+- 月增长率900 Stars，日活跃增长30 Stars
 - 生态覆盖：支持多个主流AI客户端
 
 ### 关键数据
 - 目标市场：AI应用基础设施，预计2027年达到$200亿
 - 融资需求：$300万，用于18个月产品开发和市场拓展
 - 预期估值：$2,000万
-- 当前进展：GitHub Demo已发布，私域社群用户1K+
 
 </details>
 
 ---
 
-## 1. Problem & Solution | 问题与解决方案
-
 <details>
-<summary><strong>点击展开问题与解决方案详情</strong></summary>
+<summary><h2>1. Problem & Solution | 问题与解决方案</h2></summary>
 
 ### 🔴 核心问题
 **AI应用开发门槛过高，缺乏标准化基础设施**
 
-1. **开发复杂**：AGI使用成本高、缺乏唯一性，而构建专业智能体需要深度技术背景，开发周期长
+1. **开发复杂**：通用AGI使用成本高、缺乏唯一性，而构建专业智能体需要深度技术背景，开发周期长
 2. **分享困难**：智能体无法标准化打包，难以复用和分发
 3. **使用门槛**：传统软件交互模式在AI时代需要被重新定义
 
@@ -69,14 +64,14 @@
 **三层架构重新定义AI应用基础设施**
 
 #### Layer 1: DPML协议层
-- **Domain-Specific Language**：声明式标签语言覆盖90%智能体开发需求
+- **领域专用语言(Domain-Specific Language, DSL)**：声明式标签语言覆盖90%智能体开发需求
 - **自然语言编程**：业务逻辑用自然语言描述，将通用和不变的需求以高效率特征的代码形式固化于底层
-- **快速迭代**：传统复杂编程，人人均可轻松定制和部署智能体
+- **快速迭代**：区别于传统复杂编程，让任何人均可轻松定制和部署智能体
 
 #### Layer 2: 智能体容器化
 - **标准化打包**：如Docker般封装智能体的完整运行环境
 - **版本管理**：智能体的迭代、回滚、分支管理
-- **一键部署**：跨平台、跨环境无缝运行
+- **组网协作**：智能体超级工厂，杠杆超越个体的执行生产力
 
 #### Layer 3: 自然语言交互
 - **PromptX框架**：统一的对话式交互标准
@@ -87,24 +82,31 @@
 
 ---
 
-## 2. Market Analysis | 市场分析
-
 <details>
-<summary><strong>点击展开市场分析详情</strong></summary>
+<summary><h2>2. Market Analysis | 市场分析</h2></summary>
 
 ### 市场规模 (TAM/SAM/SOM)
 
 #### TAM (Total Addressable Market): $200亿（2027年）
-- Gartner预测全球AI软件市场于2030年达到$1,850亿
-- AI开发应用细分：约10-15% = $185-280亿
+- 基于Gartner权威预测，全球AI软件市场于2030年达到$1,850亿
+- AI开发应用工具约占市场10-15%(相当于$185-280亿)
+- 参考Docker容器化市场，从0到数十亿美元的发展轨迹
+- AI应用开发标准化需要3-4年成熟期，2027年是技术采用的拐点
 
 #### SAM (Serviceable Addressable Market): $40亿
-- AI开发工具与平台市场
-- 企业级AI开发平台：约20%
+- 基于IDC数据，企业级开发工具市场年复合增长率22%
+- AI开发工具细分：包括MLOps平台、AI开发框架、智能体开发工具
+- 对标GitHub Copilot、Hugging Face等成功案例的市场表现
+- 保守估计占TAM的20%（$200亿×20%=$40亿）
 
 #### SOM (Serviceable Obtainable Market): $5亿
-- 企业级AI基础设施细分市场
-- 我们的可获得市场份额
+- 目标细分：AI原生企业级基础设施（容器化+标准化）
+- 市场渗透策略：
+  * 2024-2025：开发者社区（占SOM的10%）
+  * 2026-2027：中小企业客户（占SOM的30%）
+  * 2028-2029：大企业客户（占SOM的60%）
+- 对标Docker：6年达到$20亿估值，我们目标5年达到$5亿收入
+- 竞争优势：开源社区网络效应、标准制定及生态锁定的三重护城河
 
 ### 目标客户
 
@@ -137,10 +139,8 @@
 
 ---
 
-## 3. Business Model | 商业模式
-
 <details>
-<summary><strong>点击展开商业模式详情</strong></summary>
+<summary><h2>3. Business Model | 商业模式</h2></summary>
 
 ### 核心策略：开源+服务
 **参考成功案例：Docker, PingCAP, MongoDB**
@@ -184,10 +184,8 @@
 
 ---
 
-## 4. Product & Technology | 产品与技术
-
 <details>
-<summary><strong>点击展开产品与技术详情</strong></summary>
+<summary><h2>4. Product & Technology | 产品与技术</h2></summary>
 
 ### 技术架构
 
@@ -230,10 +228,8 @@ flowchart TD
 
 ---
 
-## 5. Go-to-Market | 市场策略
-
 <details>
-<summary><strong>点击展开市场策略详情</strong></summary>
+<summary><h2>5. Go-to-Market | 市场策略</h2></summary>
 
 ### 三阶段市场策略
 
@@ -282,10 +278,8 @@ flowchart TD
 
 ---
 
-## 6. Team | 团队介绍
-
 <details>
-<summary><strong>点击展开团队介绍详情</strong></summary>
+<summary><h2>6. Team | 团队介绍</h2></summary>
 
 ### 核心团队
 
@@ -353,10 +347,8 @@ flowchart TD
 
 ---
 
-## 7. Financial Projections | 财务预测
-
 <details>
-<summary><strong>点击展开财务预测详情</strong></summary>
+<summary><h2>7. Financial Projections | 财务预测</h2></summary>
 
 ### 收入模型
 
@@ -408,10 +400,8 @@ flowchart TD
 
 ---
 
-## 8. Funding & Use of Funds | 融资需求
-
 <details>
-<summary><strong>点击展开融资需求详情</strong></summary>
+<summary><h2>8. Funding & Use of Funds | 融资需求</h2></summary>
 
 ### 融资概况
 - **融资轮次**：Pre-A轮
@@ -468,10 +458,8 @@ flowchart TD
 
 ---
 
-## 9. Risk Analysis | 风险分析
-
 <details>
-<summary><strong>点击展开风险分析详情</strong></summary>
+<summary><h2>9. Risk Analysis | 风险分析</h2></summary>
 
 ### 主要风险及应对策略
 
@@ -522,10 +510,8 @@ flowchart TD
 
 ---
 
-## 10. Appendix | 附录
-
 <details>
-<summary><strong>点击展开附录详情</strong></summary>
+<summary><h2>10. Appendix | 附录</h2></summary>
 
 ### 市场调研数据
 - [具体调研报告]
