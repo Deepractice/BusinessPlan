@@ -1,6 +1,25 @@
 # 深度实践 Deepractice.ai 商业计划书
 
+> 🚀 **AI时代的基础设施标准制定者**
+
+## 📋 快速导航
+
+- [📊 执行摘要](#executive-summary--执行摘要)
+- [🔍 问题与解决方案](#1-problem--solution--问题与解决方案)
+- [📈 市场分析](#2-market-analysis--市场分析)
+- [💰 商业模式](#3-business-model--商业模式)
+- [🛠 产品与技术](#4-product--technology--产品与技术)
+- [🚀 市场策略](#5-go-to-market--市场策略)
+- [👥 团队介绍](#6-team--团队介绍)
+- [💼 融资需求](#7-funding--融资需求)
+- [📞 联系方式](#8-contact--联系方式)
+
+---
+
 ## Executive Summary | 执行摘要
+
+<details>
+<summary><strong>点击展开执行摘要详情</strong></summary>
 
 ### 一句话描述
 **AI时代的标准制定者** - 让智能体开发像搭积木一样易用，像容器一样标准化，实现AI触手可及
@@ -30,9 +49,14 @@
 - 预期估值：$2,000万
 - 当前进展：GitHub Demo已发布，私域社群用户1K+
 
+</details>
+
 ---
 
 ## 1. Problem & Solution | 问题与解决方案
+
+<details>
+<summary><strong>点击展开问题与解决方案详情</strong></summary>
 
 ### 🔴 核心问题
 **AI应用开发门槛过高，缺乏标准化基础设施**
@@ -59,9 +83,14 @@
 - **无界面设计**：用户通过自然语言完成所有操作
 - **AI-First UX**：为AI时代重新设计的用户体验
 
+</details>
+
 ---
 
 ## 2. Market Analysis | 市场分析
+
+<details>
+<summary><strong>点击展开市场分析详情</strong></summary>
 
 ### 市场规模 (TAM/SAM/SOM)
 
@@ -104,9 +133,14 @@
 | AI Agent平台 | 知名度高，功能完整 | 缺乏标准化，难以复用 | 我们有容器化基础设施 |
 | 大厂AI平台 | 资源充足，技术先进 | 封闭生态，vendor lock-in | 我们开源开放，标准制定 |
 
+</details>
+
 ---
 
 ## 3. Business Model | 商业模式
+
+<details>
+<summary><strong>点击展开商业模式详情</strong></summary>
 
 ### 核心策略：开源+服务
 **参考成功案例：Docker, PingCAP, MongoDB**
@@ -146,9 +180,14 @@
 | 2026 | 50万 | 12% | $3000万 | 规模化 |
 | 2027 | 100万 | 15% | $8000万 | 生态成熟 |
 
+</details>
+
 ---
 
 ## 4. Product & Technology | 产品与技术
+
+<details>
+<summary><strong>点击展开产品与技术详情</strong></summary>
 
 ### 技术架构
 
@@ -187,9 +226,14 @@
 - **网络效应**：智能体数量越多，平台价值越大
 - **数据飞轮**：使用数据改进AI模型，提升用户体验
 
+</details>
+
 ---
 
 ## 5. Go-to-Market | 市场策略
+
+<details>
+<summary><strong>点击展开市场策略详情</strong></summary>
 
 ### 三阶段市场策略
 
@@ -234,9 +278,14 @@
    - 云厂商联合销售
    - 咨询公司推荐
 
+</details>
+
 ---
 
 ## 6. Team | 团队介绍
+
+<details>
+<summary><strong>点击展开团队介绍详情</strong></summary>
 
 ### 核心团队
 
@@ -291,9 +340,14 @@
 - **2025年**：销售团队5人，市场团队3人
 - **2026年**：国际化团队，生态合作团队
 
+</details>
+
 ---
 
 ## 7. Financial Projections | 财务预测
+
+<details>
+<summary><strong>点击展开财务预测详情</strong></summary>
 
 ### 收入模型
 
@@ -341,9 +395,14 @@
 | LTV/CAC比率 | 12:1 | 19:1 | 33:1 |
 | 月流失率 | 5% | 3% | 2% |
 
+</details>
+
 ---
 
 ## 8. Funding & Use of Funds | 融资需求
+
+<details>
+<summary><strong>点击展开融资需求详情</strong></summary>
 
 ### 融资概况
 - **融资轮次**：Pre-A轮
@@ -396,9 +455,14 @@
 - [ ] 生态合作伙伴超过50家
 - [ ] 启动A轮融资
 
+</details>
+
 ---
 
 ## 9. Risk Analysis | 风险分析
+
+<details>
+<summary><strong>点击展开风险分析详情</strong></summary>
 
 ### 主要风险及应对策略
 
@@ -445,9 +509,14 @@
 4. **团队激励**：股权+现金+成长机会
 5. **财务管控**：严格预算管理，定期财务审查
 
+</details>
+
 ---
 
 ## 10. Appendix | 附录
+
+<details>
+<summary><strong>点击展开附录详情</strong></summary>
 
 ### 市场调研数据
 - [具体调研报告]
@@ -468,6 +537,8 @@
 - [公司章程]
 - [股权结构]
 - [知识产权清单]
+
+</details>
 
 ---
 
