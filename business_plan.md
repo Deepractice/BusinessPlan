@@ -64,12 +64,18 @@
 ## 2. Market Analysis | 市场分析
 
 ### 市场规模 (TAM/SAM/SOM)
-**TAM(Total Addressable Market)**: $200亿（2027年）
+
+#### TAM (Total Addressable Market): $200亿（2027年）
 - Gartner预测全球AI软件市场于2030年达到$1,850亿
 - AI开发应用细分：约10-15% = $185-280亿
-**SAM(Serviceable Addressable Market)**: AI开发工具与平台 $40亿
+
+#### SAM (Serviceable Addressable Market): $40亿
+- AI开发工具与平台市场
 - 企业级AI开发平台：约20%
-**SOM(Serviceable Obtainable Market):**: 企业级AI基础设施 $5亿
+
+#### SOM (Serviceable Obtainable Market): $5亿
+- 企业级AI基础设施细分市场
+- 我们的可获得市场份额
 
 ### 目标客户
 
