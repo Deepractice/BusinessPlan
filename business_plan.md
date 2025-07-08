@@ -34,8 +34,8 @@
   > 项目实绩: [PromptX · 领先的上下文工程平台](https://github.com/Deepractice/PromptX)
 
 ### 牵引力数据
-- GitHub Star 1.8K+，开源2个月内Forks数100+
-- 月增长率900 Stars，日活跃增长30 Stars
+- 开源2个月内 GitHub Star 1.8K+、Forks 100+
+- 月增长率`900` Stars，日活跃增长`30` Stars
 - 生态覆盖：支持多个主流AI客户端
 
 ### 关键数据
@@ -80,7 +80,7 @@
 <details>
 <summary><h2>2. Market Analysis | 市场分析</h2></summary>
 
-## 驱动逻辑差异：
+## 驱动逻辑差异
  - AI + 行业 = 由AI主导行业升级的技术驱动和价值观优先
  - 行业 + AI = 业务主导的工具思维和降本增效
 
