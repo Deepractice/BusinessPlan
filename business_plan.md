@@ -11,8 +11,10 @@
 - [🛠 产品与技术](#4-product--technology--产品与技术)
 - [🚀 市场策略](#5-go-to-market--市场策略)
 - [👥 团队介绍](#6-team--团队介绍)
-- [💼 融资需求](#7-funding--融资需求)
-- [📞 联系方式](#8-contact--联系方式)
+- [📊 财务预测](#7-financial-projections--财务预测)
+- [💼 融资需求](#8-funding--use-of-funds--融资需求)
+- [⚠️ 风险分析](#9-risk-analysis--风险分析)
+- [📎 附录](#appendix--附录)
 
 ---
 
@@ -540,7 +542,7 @@ flowchart TD
 ---
 
 <details>
-<summary><h2>10. Appendix | 附录</h2></summary>
+<summary><h2>Appendix | 附录</h2></summary>
 
 ### 市场调研数据
 - [具体调研报告]
