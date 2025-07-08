@@ -53,7 +53,7 @@
 **扫码添加微信，深度交流**
 
 <div align="left">
-<img src="qrcode.jpg" alt="微信二维码" width="200"/>
+<img src="assets/images/qrcode.jpg" alt="微信二维码" width="200"/>
 </div>
 
 ## 📄 开源协议
