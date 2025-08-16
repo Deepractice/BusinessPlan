@@ -563,7 +563,7 @@ flowchart TD
 ---
 
 **联系方式**
-- 邮箱：carson@deepractice.ai
+- 邮箱：carson@deepracticex.com
 - 官网：https://deepractice.ai
 - GitHub：https://github.com/Deepractice
 
