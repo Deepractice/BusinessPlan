@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptX 应用实战：当AI成为思考伙伴</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* 粒子背景 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(74, 144, 226, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+
+        /* 主容器 */
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        /* 标题样式 */
+        .slide h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #4a90e2;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+        }
+
+        .slide h3 {
+            font-size: 1.8rem;
+            color: #64b5f6;
+            margin-bottom: 20px;
+        }
+
+        /* 内容区域 */
+        .content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 高亮文本 */
+        .highlight {
+            background: linear-gradient(120deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: #e3f2fd;
+            font-weight: 600;
+        }
+
+        /* 时间轴样式 */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #4a90e2;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.2rem;
+        }
+
+        /* 导航控制 */
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #4a90e2;
+            transform: scale(1.2);
+        }
+
+        .nav-dot:hover {
+            background: #64b5f6;
+        }
+
+        /* 进度条 */
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+            z-index: 10;
+        }
+
+        /* 控制按钮 */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(74, 144, 226, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #e3f2fd;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .slide h1 { font-size: 2.5rem; }
+            .slide h2 { font-size: 2rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .slide { padding: 20px; }
+        }
+
+        /* 列表样式 */
+        .styled-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .styled-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .styled-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #4a90e2;
+            font-size: 0.8rem;
+        }
+
+        /* 特殊效果 */
+        .glow {
+            text-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* 数据展示 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4a90e2;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #b0bec5;
+            margin-top: 5px;
+        }
+
+        /* 图片样式 */
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .slide img:hover {
+            transform: scale(1.05);
+        }
+
+        /* 演示卡片特殊样式 */
+        .demo-image {
+            border: 2px solid rgba(74, 144, 226, 0.3);
+            background: rgba(255, 255, 255, 0.02);
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- 进度条 -->
+    <div class="progress" id="progress"></div>
+    
+    <!-- 主演示容器 -->
+    <div class="presentation-container">
+        
+        <!-- 第1页：开场 -->
+        <div class="slide active" id="slide0">
+            <div class="content">
+                <h1 class="glow">PromptX 应用实战</h1>
+                <h2>让AI成为思考伙伴</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number pulse">🧠</span>
+                        <span class="stat-label">从个体到协作思维</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number pulse">🍽️</span>
+                        <span class="stat-label">吃自己的狗粮</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number pulse">🌟</span>
+                        <span class="stat-label">开源策略逻辑</span>
+                    </div>
+                </div>
+                <p style="font-size: 1.2rem; color: #b0bec5; margin-top: 30px;">
+                    <strong>deepractice.ai｜2025.08.18</strong><br>
+                    Speaker：宝哥
+                </p>
+            </div>
+        </div>
+
+        <!-- 第2页：第一部分开始 -->
+        <div class="slide" id="slide1">
+            <div class="content">
+                <h1 style="font-size: 4rem;">从个体到协作思维</h1>
+                <h2 class="glow">一个人思考有局限</h2>
+                <p style="font-size: 1.5rem; color: #b0bec5; margin-top: 30px;">
+                    AI是思维伙伴，不只是工具
+                </p>
+                <div class="content-grid" style="margin-top: 40px; gap: 20px;">
+                    <div class="card">
+                        <h3>💬 人类主导权</h3>
+                        <img src="presentation/demo/conversation-1.png" alt="开源策略" style="max-width: 100%; height: auto; margin-top: 15px; border-radius: 8px;">
+                    </div>
+                    <div class="card">
+                        <h3>🌱 引导式提问</h3>
+                        <img src="presentation/demo/conversation-2.png" alt="生态建设" style="max-width: 100%; height: auto; margin-top: 15px; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第3页：传统 vs AI协作思维 -->
+        <div class="slide" id="slide2">
+            <div class="content">
+                <h2>AI不应被局限于软件工程</h2>
+                <div class="content-grid">
+                    <div class="card" style="border-left: 4px solid #e74c3c;">
+                        <h3 style="color: #e74c3c;">❌ 传统个体思维</h3>
+                        <ul class="styled-list">
+                            <li>依赖个人经验和知识</li>
+                            <li>遇到瓶颈时陷入思维定势</li>
+                            <li>单一视角，容易盲点</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 4px solid #27ae60;">
+                        <h3 style="color: #27ae60;">✅ AI协作思维</h3>
+                        <ul class="styled-list">
+                            <li>融合人类创意 + AI可塑性</li>
+                            <li>AI帮助突破思维局限</li>
+                            <li>多角度验证，减少盲点</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 40px;">
+                    <h3>💬 AI作为专业角色，向人类用户提问</h3>
+                    <div class="content-grid" style="gap: 10px; margin-top: 20px; grid-template-columns: repeat(4, 1fr);">
+                        <img src="presentation/demo/conversation-4.png" alt="思维协作" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        <img src="presentation/demo/conversation-3.png" alt="对话协作" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        <img src="presentation/demo/ask-3.png" alt="商业计划书对话1" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        <img src="presentation/demo/ask-4.png" alt="商业计划书对话2" style="max-width: 100%; height: auto; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：实战案例 -->
+        <div class="slide" id="slide3">
+            <div class="content">
+                <h2>深度实践｜商业计划书的诞生</h2>
+                <div class="card" style="margin-top: 40px; background: rgba(74, 144, 226, 0.1); border: 2px solid #4a90e2; cursor: pointer; transition: all 0.3s ease;" onclick="window.open('https://github.com/Deepractice/BusinessPlan', '_blank')" onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 10px 30px rgba(74, 144, 226, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                    <h3 style="color: #4a90e2; font-size: 1.5rem;">🚀 点击查看项目完整内容</h3>
+                    <p style="color: #4a90e2; font-size: 1.2rem; margin: 10px 0;">🔗 Github.com/Deepractice/BusinessPlan</p>
+                    <p style="color: #b0bec5; font-size: 1rem; margin-top: 15px;">📊 完全开源 | 🌟 完整章节结构 | 💼 投资级文档</p>
+                    <div class="timeline" style="margin-top: 30px;">
+                        <div class="timeline-item">
+                            <div class="timeline-icon">📝</div>
+                            <div>
+                                <h4 style="color: #e74c3c; text-align: left;">传统方式</h4>
+                                <p style="text-align: left;">花数周时间独自思考、写作及整理</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">🤖</div>
+                            <div>
+                                <h4 style="color: #27ae60; text-align: left;">AI协作方式</h4>
+                                <p style="text-align: left;">与PromptX内置的女娲所创建的角色对话</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p style="color: #b0bec5; font-style: italic; margin-top: 30px; font-size: 1.2rem;">
+                    💡 <span class="highlight">关键洞察</span>：AI不是替代人类思考，而是放大人类思考
+                </p>
+            </div>
+        </div>
+
+        <!-- 第5页：第二部分开始 -->
+        <div class="slide" id="slide4">
+            <div class="content">
+                <h1 style="font-size: 4rem;">吃自己的狗粮</h1>
+                <h2 class="glow">dogfooding：我们就是PromptX最好的用户</h2>
+                <p style="font-size: 1.5rem; color: #b0bec5; margin-top: 30px;">
+                    最好的产品验证就是自己每天都在用
+                </p>
+                <div class="content-grid" style="margin-top: 40px;">
+                    <div class="card">
+                        <h3>🎭 唤醒女娲创造角色</h3>
+                        <img src="presentation/demo/nuwa-create-role.png" alt="女娲创造角色" style="max-width: 100%; height: auto; margin-top: 20px; border-radius: 8px;">                        
+                    </div>
+                    <div class="card">
+                        <h3>🤖 投资人角色激活</h3>
+                        <img src="presentation/demo/role-action.png" alt="角色激活" style="max-width: 100%; height: auto; margin-top: 20px; border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第6页：为什么要吃狗粮 -->
+        <div class="slide" id="slide5">
+            <div class="content">
+                <h2>为什么要"吃狗粮"？</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>🎯 痛点发现</h3>
+                        <ul class="styled-list">
+                            <li>第一时间感受产品问题</li>
+                            <li>真实用户场景验证</li>
+                            <li>避免"闭门造车"</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>⚡ 快速迭代</h3>
+                        <ul class="styled-list">
+                            <li>边用边改，实时反馈</li>
+                            <li>优先级自然浮现</li>
+                            <li>功能必要性验证</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>🛠️ 提升体验</h3>
+                        <ul class="styled-list">
+                            <li>发现用户体验问题</li>
+                            <li>优化交互和性能</li>
+                            <li>提升产品易用性</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 30px;">
+                    <img src="presentation/demo/whole-demo-2.png" alt="开源成功案例" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 15px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- 第7页：第三部分开始 -->
+        <div class="slide" id="slide6">
+            <div class="content">
+                <h1 style="font-size: 4rem;">开源策略实践</h1>
+                <h2 class="glow">先利他，后共赢</h2>
+                <p style="font-size: 1.5rem; color: #b0bec5; margin-top: 30px;">
+                    支撑AI协作思维的底层逻辑
+                </p>
+            </div>
+        </div>
+
+        <!-- 第8页：开源不是用爱发电 -->
+        <div class="slide" id="slide7">
+            <div class="content">
+                <h2>我们的开源不是"用爱发电"</h2>
+                <div class="content-grid">
+                    <div class="card" style="border-left: 4px solid #e74c3c;">
+                        <h3 style="color: #e74c3c;">❌ 误区</h3>
+                        <ul class="styled-list">
+                            <li>"开源就是免费"</li>
+                            <li>"开源没有商业价值"</li>
+                            <li>"开源是情怀驱动"</li>
+                            <li>"开源难以盈利"</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 4px solid #27ae60;">
+                        <h3 style="color: #27ae60;">✅ 现实</h3>
+                        <ul class="styled-list">
+                            <li>开源是<span class="highlight">商业策略</span></li>
+                            <li>开源是<span class="highlight">影响力建设</span></li>
+                            <li>开源是<span class="highlight">生态构建</span></li>
+                            <li>开源是<span class="highlight">标准制定</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 30px; background: rgba(74, 144, 226, 0.1);">
+                    <strong>💰 成功案例</strong>：Docker, MongoDB, Elastic, GitLab...
+                    <br><small style="color: #b0bec5;">开源核心 + 企业服务 = 数十亿美元估值</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第9页：我们的开源策略 -->
+        <div class="slide" id="slide8">
+            <div class="content">
+                <h2>我们的开源策略</h2>
+                <div class="content-grid" style="gap: 20px; margin-top: 30px; grid-template-columns: repeat(2, 1fr);">
+                    <div class="card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="font-size: 2rem; margin-right: 15px;">💝</div>
+                            <h3 style="text-align: left; margin: 0;">利他思维</h3>
+                        </div>
+                        <p style="color: #b0bec5; text-align: left; margin: 0;">原先是为了解决我们自己的问题，不是为了开源而开源</p>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="font-size: 2rem; margin-right: 15px;">🌱</div>
+                            <h3 style="text-align: left; margin: 0;">社区建设</h3>
+                        </div>
+                        <p style="color: #b0bec5; text-align: left; margin: 0;">让更多人参与，共同迭代项目</p>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="font-size: 2rem; margin-right: 15px;">💼</div>
+                            <h3 style="text-align: left; margin: 0;">商业闭环</h3>
+                        </div>
+                        <p style="color: #b0bec5; text-align: left; margin: 0;">开源获得用户，企业服务实现收入</p>
+                    </div>
+                    <div class="card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="font-size: 2rem; margin-right: 15px;">🏆</div>
+                            <h3 style="text-align: left; margin: 0;">长期价值</h3>
+                        </div>
+                        <p style="color: #b0bec5; text-align: left; margin: 0;">成为AI时代基础设施的标准制定者</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 导航控制 -->
+    <div class="navigation" id="navigation"></div>
+    
+    <!-- 控制按钮 -->
+    <div class="controls">
+        <div class="control-btn" id="prevBtn">‹</div>
+        <div class="control-btn" id="nextBtn">›</div>
+    </div>
+
+    <script>
+        // 演示文稿核心功能
+        class PresentationEngine {
+            constructor() {
+                this.currentSlide = 0;
+                this.totalSlides = document.querySelectorAll('.slide').length;
+                this.init();
+            }
+
+            init() {
+                this.createParticles();
+                this.createNavigation();
+                this.bindEvents();
+                this.updateProgress();
+                console.log('🎯 PromptX演示文稿初始化完成');
+            }
+
+            // 创建粒子背景
+            createParticles() {
+                const particlesContainer = document.getElementById('particles');
+                const particleCount = 50;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            // 创建导航点
+            createNavigation() {
+                const navigation = document.getElementById('navigation');
+                for (let i = 0; i < this.totalSlides; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'nav-dot';
+                    if (i === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => this.goToSlide(i));
+                    navigation.appendChild(dot);
+                }
+            }
+
+            // 绑定事件
+            bindEvents() {
+                // 键盘控制
+                document.addEventListener('keydown', (e) => {
+                    switch(e.key) {
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                            this.prevSlide();
+                            break;
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case ' ':
+                            this.nextSlide();
+                            break;
+                        case 'Home':
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            this.goToSlide(this.totalSlides - 1);
+                            break;
+                    }
+                });
+
+                // 按钮控制
+                document.getElementById('prevBtn').addEventListener('click', () => this.prevSlide());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextSlide());
+
+                // 触摸控制
+                let startX = 0;
+                document.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                });
+
+                document.addEventListener('touchend', (e) => {
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+                    
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) {
+                            this.nextSlide();
+                        } else {
+                            this.prevSlide();
+                        }
+                    }
+                });
+
+                // 鼠标滚轮控制
+                let wheelTimeout;
+                document.addEventListener('wheel', (e) => {
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        if (e.deltaY > 0) {
+                            this.nextSlide();
+                        } else {
+                            this.prevSlide();
+                        }
+                    }, 150);
+                });
+            }
+
+            // 切换到指定幻灯片
+            goToSlide(index) {
+                if (index < 0 || index >= this.totalSlides) return;
+
+                // 更新幻灯片
+                const slides = document.querySelectorAll('.slide');
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active', 'prev');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    } else if (i < index) {
+                        slide.classList.add('prev');
+                    }
+                });
+
+                // 更新导航
+                const dots = document.querySelectorAll('.nav-dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+
+                this.currentSlide = index;
+                this.updateProgress();
+                
+                console.log(`📍 当前幻灯片: ${index + 1}/${this.totalSlides}`);
+            }
+
+            // 下一张
+            nextSlide() {
+                this.goToSlide(this.currentSlide + 1);
+            }
+
+            // 上一张
+            prevSlide() {
+                this.goToSlide(this.currentSlide - 1);
+            }
+
+            // 更新进度条
+            updateProgress() {
+                const progress = document.getElementById('progress');
+                const percentage = ((this.currentSlide + 1) / this.totalSlides) * 100;
+                progress.style.width = percentage + '%';
+            }
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            const presentation = new PresentationEngine();
+            
+            // 添加粒子鼠标交互效果
+            document.addEventListener('mousemove', (e) => {
+                const particles = document.querySelectorAll('.particle');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                particles.forEach((particle, index) => {
+                    const speed = (index % 3 + 1) * 0.5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+
+            // 打印控制台信息
+            console.log(`
+🎯 PromptX 应用实战分享
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎮 控制方式:
+   ⌨️  方向键 / 空格键 - 切换幻灯片
+   🖱️  鼠标滚轮 - 上下切换
+   👆 点击导航点 - 直接跳转
+   📱 触摸滑动 - 移动端控制
+
+📊 演示数据:
+   📄 总幻灯片: ${presentation.totalSlides} 页
+   ⏱️  预计时长: 45-50 分钟
+   🌟 GitHub Stars: 2.5K+
+
+💡 技术亮点:
+   🎨 纯CSS3动画效果
+   ⚡ 响应式设计
+   🎯 键盘/触摸/鼠标全控制
+   ✨ 粒子背景交互
+
+🚀 深度实践 Deepractice.ai
+   让AI成为你的思维伙伴
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            `);
+        });
+
+        // 防止页面刷新快捷键冲突
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
+                e.preventDefault();
+            }
+        });
+
+        // 添加全屏功能
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11') {
+                e.preventDefault();
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
